@@ -1,0 +1,1515 @@
+{
+  "name": "Phone Advisor",
+  "intents": [
+    {
+      "intent": "greeting",
+      "examples": [
+        {
+          "text": "hello"
+        },
+        {
+          "text": "good morning"
+        },
+        {
+          "text": "good afternoon"
+        },
+        {
+          "text": "good evening"
+        },
+        {
+          "text": "hi"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "positive",
+      "examples": [
+        {
+          "text": "I need good battery life"
+        },
+        {
+          "text": "I love Apple"
+        },
+        {
+          "text": "I like Galaxy phones"
+        },
+        {
+          "text": "I care about looks"
+        },
+        {
+          "text": "Style is important to me"
+        },
+        {
+          "text": "I prefer Google"
+        },
+        {
+          "text": "The new Samsung looks great"
+        },
+        {
+          "text": "I want a great battery"
+        },
+        {
+          "text": "I want a good looking phone"
+        }
+      ],
+      "description": "Expressing positive opinion about mobile phones"
+    },
+    {
+      "intent": "submitreview",
+      "examples": [
+        {
+          "text": "Can I submit a review"
+        },
+        {
+          "text": "I'd like to review a phone"
+        },
+        {
+          "text": "Want to hear what I think of my mobile?"
+        },
+        {
+          "text": "Here's a review of my phone"
+        },
+        {
+          "text": "Can I give a review of my iPhone"
+        },
+        {
+          "text": "Here's what I think of Google phones"
+        },
+        {
+          "text": "I can give you a review of Samsung"
+        },
+        {
+          "text": "i want to submit a review"
+        }
+      ],
+      "description": "Expressing intent to submit a review about a mobile phone brand"
+    },
+    {
+      "intent": "newphone",
+      "examples": [
+        {
+          "text": "What's the best phone available"
+        },
+        {
+          "text": "Can you recommend a phone"
+        },
+        {
+          "text": "I'd like to replace my phone"
+        },
+        {
+          "text": "I want advice regarding phones"
+        },
+        {
+          "text": "I need a new phone"
+        },
+        {
+          "text": "I'm looking for a new phone"
+        },
+        {
+          "text": "I am interested in buying a new phone"
+        }
+      ],
+      "description": "Expressing intent to buy or get advice about buying a new phone"
+    },
+    {
+      "intent": "negative",
+      "examples": [
+        {
+          "text": "Google sucks"
+        },
+        {
+          "text": "I don't care about style"
+        },
+        {
+          "text": "I'm not bothered about battery life"
+        },
+        {
+          "text": "Not concerned with looks"
+        },
+        {
+          "text": "I do not like iPhones"
+        },
+        {
+          "text": "I hate Samsung"
+        },
+        {
+          "text": "Apple is the worst"
+        },
+        {
+          "text": "My Galaxy is very average"
+        }
+      ],
+      "description": "Expressing negative opinion about mobile phones"
+    },
+    {
+      "intent": "newcontract",
+      "examples": [
+        {
+          "text": "My mobile contract is coming to an end"
+        },
+        {
+          "text": "My contract has expired"
+        },
+        {
+          "text": "Can you recommend a new contract"
+        },
+        {
+          "text": "I'm looking for a new mobile contract"
+        },
+        {
+          "text": "I need a new phone contract"
+        },
+        {
+          "text": "Which provider would you recommend"
+        },
+        {
+          "text": "Who's service should I choose next"
+        },
+        {
+          "text": "My agreement is ending"
+        },
+        {
+          "text": "Can you pick a service provider for me"
+        },
+        {
+          "text": "My contract is ending"
+        }
+      ],
+      "description": "Expressing intent to get advice about phone contracts"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "attribute",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "battery",
+          "synonyms": [
+            "battery life"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "style",
+          "synonyms": [
+            "fashion",
+            "stylish",
+            "looks"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "brand",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Samsung",
+          "synonyms": [
+            "galaxy",
+            "j3",
+            "a8",
+            "edge"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Apple",
+          "synonyms": [
+            "iphone"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Google",
+          "synonyms": [
+            "pixel"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-date",
+      "values": []
+    },
+    {
+      "entity": "sys-person",
+      "values": []
+    },
+    {
+      "entity": "sys-number",
+      "values": []
+    },
+    {
+      "entity": "sys-currency",
+      "values": []
+    }
+  ],
+  "language": "en",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-09-20"
+    }
+  },
+  "description": "",
+  "dialog_nodes": [
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "How much data (Gb) do you typically use per month?"
+      },
+      "parent": "slot_1_1545039252068",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1545039252068",
+      "previous_sibling": "handler_2_1545039252068"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1545039252068",
+      "context": {
+        "dataPerMonth": "@sys-number"
+      },
+      "metadata": {},
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_2_1545039252068"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "What is your current spend per month?"
+      },
+      "parent": "slot_3_1544809482297",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_5_1544809482297",
+      "previous_sibling": "handler_4_1544809482297"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_3_1544809482297",
+      "context": {
+        "costPerMonth": "@sys-currency"
+      },
+      "metadata": {},
+      "conditions": "@sys-currency",
+      "event_name": "input",
+      "dialog_node": "handler_4_1544809482297"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Sorry I don't recognise that as a name. Please try again!"
+      },
+      "parent": "slot_24_1545125927364",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_26_1545125927364",
+      "previous_sibling": "handler_25_1545125927364"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_24_1545125927364",
+      "context": {
+        "name": "@sys-person"
+      },
+      "metadata": {},
+      "conditions": "@sys-person",
+      "event_name": "input",
+      "dialog_node": "handler_25_1545125927364"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_23_1545125912239",
+      "metadata": {},
+      "variable": "$name",
+      "dialog_node": "slot_24_1545125927364"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_19_1545125676861",
+      "event_name": "focus",
+      "dialog_node": "handler_21_1545125676861",
+      "previous_sibling": "handler_20_1545125676861"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_19_1545125676861",
+      "context": {},
+      "event_name": "input",
+      "dialog_node": "handler_20_1545125676861"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1544809235701",
+      "metadata": {},
+      "variable": "$contractStart",
+      "dialog_node": "slot_4_1545039273273",
+      "previous_sibling": "slot_1_1545039252068"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1544809235701",
+      "metadata": {},
+      "variable": "$dataPerMonth",
+      "dialog_node": "slot_1_1545039252068",
+      "previous_sibling": "slot_3_1544809482297"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1544809235701",
+      "metadata": {},
+      "variable": "$costPerMonth",
+      "dialog_node": "slot_3_1544809482297",
+      "previous_sibling": "node_2_1544809482270"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "So you're looking for a new contract starting $contractStart, with around $dataPerMonth Gb of data per month, costing in the region of £$costPerMonth each month."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1544809235701",
+      "metadata": {},
+      "dialog_node": "node_2_1544809482270",
+      "previous_sibling": "node_9_1545045034277"
+    },
+    {
+      "type": "standard",
+      "title": "Recommend Contract",
+      "output": {},
+      "parent": "node_1_1544809235701",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1544451568484"
+      },
+      "conditions": "true",
+      "dialog_node": "node_9_1545045034277",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "If you don't like Google but want to stay with Android, try a Samsung Galaxy S9, or if you fancy a change, maybe a new iPhone XR?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "iPhone XR",
+            "source": "https://bit.ly/2S0WmWg",
+            "response_type": "image"
+          },
+          {
+            "title": "Galaxy S9",
+            "source": "https://bit.ly/2zWQlmH",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_9_1544542976082",
+      "metadata": {},
+      "conditions": "@brand:Google",
+      "dialog_node": "node_11_1544543312003",
+      "previous_sibling": "node_10_1544543151269"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "If you want to steer away from Samsung but stay with Android then you could try a Google Pixel 3, or for a change you could go for a new iPhone XR."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "iPhone XR",
+            "source": "https://bit.ly/2S0WmWg",
+            "response_type": "image"
+          },
+          {
+            "title": "Pixel 3",
+            "source": "https://bit.ly/2EhAuC1",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_9_1544542976082",
+      "metadata": {},
+      "conditions": "@brand:Samsung",
+      "dialog_node": "node_12_1544543328045",
+      "previous_sibling": "node_11_1544543312003"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "If you don't like Apple you could go for an Android phone, maybe a Samsung Galaxy S9 or Google Pixel 3"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "Pixel 3",
+            "source": "https://bit.ly/2EhAuC1",
+            "response_type": "image"
+          },
+          {
+            "title": "Galaxy S9",
+            "source": "https://bit.ly/2zWQlmH",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_9_1544542976082",
+      "metadata": {},
+      "conditions": "@brand:Apple",
+      "dialog_node": "node_10_1544543151269"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "When do you need your new contract to start?"
+      },
+      "parent": "slot_4_1545039273273",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_6_1545039273273",
+      "previous_sibling": "handler_5_1545039273273"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1545039273273",
+      "context": {
+        "contractStart": "@sys-date"
+      },
+      "metadata": {},
+      "conditions": "@sys-date",
+      "event_name": "input",
+      "dialog_node": "handler_5_1545039273273"
+    },
+    {
+      "type": "standard",
+      "title": "Call getSentiment function",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_2_1545395251608",
+      "actions": [
+        {
+          "name": "/<my-ibm-cloud-function-details>/actions/getSentiment",
+          "type": "cloud_function",
+          "parameters": {
+            "payload": "<?input.text?>"
+          },
+          "credentials": "$private.myCredentials",
+          "result_variable": "$nluSentiment"
+        }
+      ],
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "true",
+      "dialog_node": "node_5_1545654315546"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "Welcome",
+      "metadata": {},
+      "dialog_node": "slot_19_1545125676861",
+      "previous_sibling": "node_23_1545125912239"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Morning! I'm Mobi, a mobile phone advisor. What's your name?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "Welcome",
+      "metadata": {},
+      "conditions": "now().after('04:00:00') && now().before('11:59:59')",
+      "dialog_node": "node_17_1545060034256",
+      "previous_sibling": "slot_19_1545125676861"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Afternoon! I'm Mobi, a mobile phone advisor. What's your name?"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "Welcome",
+      "metadata": {},
+      "conditions": "now().after('12:00:00') && now().before('16:59:59')",
+      "dialog_node": "node_1_1545131910183",
+      "previous_sibling": "node_17_1545060034256"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Evening! I'm Mobi, a mobile phone advisor. What's your name?"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "Welcome",
+      "metadata": {},
+      "conditions": "now().after('17:00:00') && now().before('23:59:59')",
+      "dialog_node": "node_2_1545131924002",
+      "previous_sibling": "node_1_1545131910183"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello I'm Mobi, a mobile phone advisor. It's really late but I'm here to help 24 hours a day! What's your name?"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "Welcome",
+      "metadata": {},
+      "conditions": "now().after('00:00:00')",
+      "dialog_node": "node_3_1545131938113",
+      "previous_sibling": "node_2_1545131924002"
+    },
+    {
+      "type": "frame",
+      "title": "Get Name",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi $foreName, how can I help you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "Welcome",
+      "context": {
+        "foreName": "<? $name.extract('^[^\\s]+',0) ?>"
+      },
+      "metadata": {
+        "fallback": "leave"
+      },
+      "conditions": "true",
+      "dialog_node": "node_23_1545125912239",
+      "digress_out": "allow_all",
+      "digress_out_slots": "not_allowed"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "A Google fan, huh?  I'd probably go for the Pixel 3."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "Pixel 3",
+            "source": "https://bit.ly/2EhAuC1",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_4_1544521510753",
+      "metadata": {},
+      "conditions": "@brand:Google",
+      "dialog_node": "node_8_1544542300667",
+      "previous_sibling": "node_5_1544521624092"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "If you like Samsung I'd recommend a new Galaxy S9."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "Galaxy S9",
+            "source": "https://bit.ly/2zWQlmH",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_4_1544521510753",
+      "metadata": {},
+      "conditions": "@brand:Samsung",
+      "dialog_node": "node_6_1544521785207",
+      "previous_sibling": "node_8_1544542300667"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "If you like Apple you could get the iPhone XR.  It's pretty cool."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "iPhone XR",
+            "source": "https://bit.ly/2S0WmWg",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_4_1544521510753",
+      "metadata": {},
+      "conditions": "@brand:Apple",
+      "dialog_node": "node_5_1544521624092"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Beauty is in the eye of the beholder... but the Huawei P20 Pro looks very cool."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "Huawei P20 Pro",
+            "source": "https://bit.ly/2BdHME0",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_13_1544543571150",
+      "metadata": {},
+      "conditions": "@attribute:style",
+      "dialog_node": "node_15_1544544081477",
+      "previous_sibling": "node_14_1544543637980"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "If you need a long battery life then go retro! There's an updated Nokia 3310 out now."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "Nokia 3310",
+            "source": "https://bit.ly/2RX48kj",
+            "response_type": "image"
+          }
+        ]
+      },
+      "parent": "node_13_1544543571150",
+      "metadata": {},
+      "conditions": "@attribute:battery",
+      "dialog_node": "node_14_1544543637980"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Watson calculates your $brandForReview review score to be <? T(Math).abs(T(Math).round($nluSentiment.score*100)) ?>% negative."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_7_1545658183608",
+      "metadata": {},
+      "conditions": "$nluSentiment.score < 0",
+      "dialog_node": "node_10_1545658407761",
+      "previous_sibling": "node_9_1545658405911"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Watson calculates your $brandForReview review score to be 0% positive. Which to be fair, also means 0% negative."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_7_1545658183608",
+      "metadata": {},
+      "conditions": "$nluSentiment.score == 0",
+      "dialog_node": "node_9_1545658405911",
+      "previous_sibling": "node_8_1545658301197"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Watson calculates your $brandForReview review score to be <? T(Math).round($nluSentiment.score*100) ?>% positive."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1545658183608",
+      "metadata": {},
+      "conditions": "$nluSentiment.score > 0",
+      "dialog_node": "node_8_1545658301197"
+    },
+    {
+      "type": "standard",
+      "title": "Send Feedback Message",
+      "output": {},
+      "parent": "node_5_1545654315546",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1544451568484"
+      },
+      "conditions": "true",
+      "dialog_node": "node_13_1545659687245",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_7_1545658183608"
+    },
+    {
+      "type": "standard",
+      "title": "Send Positive/Negative Message",
+      "output": {},
+      "parent": "node_5_1545654315546",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_13_1545659687245"
+      },
+      "conditions": "true",
+      "dialog_node": "node_7_1545658183608",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Save Brand",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please submit your $brandForReview review now, ensuring you enter more than 15 characters."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1545393776407",
+      "context": {
+        "brandForReview": "@brand"
+      },
+      "metadata": {},
+      "conditions": "@brand",
+      "dialog_node": "node_2_1545395251608"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "For this amount of data usage you can actually get a contract with EE for 10Gb data at just £16.99 per month."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_9_1545045034277",
+      "metadata": {},
+      "conditions": "$costPerMonth>20 && $dataPerMonth<10",
+      "dialog_node": "node_11_1545045584193",
+      "previous_sibling": "node_10_1545045166676"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Try O2, they have a package for a monthly charge of £7.99 that includes 4Gb data."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_9_1545045034277",
+      "metadata": {},
+      "conditions": "$costPerMonth>10 && $dataPerMonth<5",
+      "dialog_node": "node_13_1545045604820",
+      "previous_sibling": "node_12_1545045603483"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The best low cost package is currently with Vodafone: 2Gb data for £4.99 per month."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_9_1545045034277",
+      "metadata": {},
+      "conditions": "$costPerMonth>0 && $dataPerMonth>0",
+      "dialog_node": "node_14_1545045605789",
+      "previous_sibling": "node_13_1545045604820"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "If you don't want data, then try Tesco Mobile's Voice Only contract for a £3.99 monthly fee."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_9_1545045034277",
+      "metadata": {},
+      "conditions": "$dataPerMonth<=0",
+      "dialog_node": "node_15_1545045606731",
+      "previous_sibling": "node_14_1545045605789"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Three have the best comparable package with 8Gb for £12.99 per month."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_9_1545045034277",
+      "metadata": {},
+      "conditions": "$costPerMonth>10 && $dataPerMonth>5",
+      "dialog_node": "node_12_1545045603483",
+      "previous_sibling": "node_11_1545045584193"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Your best package currently available is BT Unlimited Data, for £24.99 per month."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1545045034277",
+      "metadata": {},
+      "conditions": "$costPerMonth>20 && $dataPerMonth>10",
+      "dialog_node": "node_10_1545045166676"
+    },
+    {
+      "type": "standard",
+      "title": "Attribute Positive",
+      "output": {},
+      "parent": "node_3_1544467128742",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1544451568484"
+      },
+      "conditions": "#positive && @attribute",
+      "dialog_node": "node_13_1544543571150",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_9_1544542976082"
+    },
+    {
+      "type": "standard",
+      "title": "Brand Negative",
+      "output": {},
+      "parent": "node_3_1544467128742",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1544451568484"
+      },
+      "conditions": "#negative && @brand",
+      "dialog_node": "node_9_1544542976082",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_4_1544521510753"
+    },
+    {
+      "type": "standard",
+      "title": "Not Sure",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I'm not sure I understand."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1544467128742",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_3_1544467128742"
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_16_1544544220495",
+      "previous_sibling": "node_13_1544543571150"
+    },
+    {
+      "type": "standard",
+      "title": "Brand Positive",
+      "output": {},
+      "parent": "node_3_1544467128742",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1544451568484"
+      },
+      "conditions": "#positive && @brand",
+      "dialog_node": "node_4_1544521510753",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Ask User Preference",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What's your current phone like? Does it have features you like or dislike?"
+              },
+              {
+                "text": "Tell something good or bad about your current phone, or what particular attributes you like in a phone."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1544466809786",
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_3_1544467128742"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "You sound pretty ambivalent about $brandForReview products. Might be time to check out other options."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_13_1545659687245",
+      "metadata": {},
+      "conditions": "$nluSentiment.score > -0.2",
+      "dialog_node": "node_16_1545660013709",
+      "previous_sibling": "node_15_1545660012136"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "OK so it looks like you don't really like $brandForReview phones. I'd go and check out the competition."
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_13_1545659687245",
+      "metadata": {},
+      "conditions": "$nluSentiment.score > -0.7",
+      "dialog_node": "node_17_1545660015429",
+      "previous_sibling": "node_16_1545660013709"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Woah! You had a pretty bad time with $brandForReview then? Definitely time for a change!"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_13_1545659687245",
+      "metadata": {},
+      "conditions": "$nluSentiment.score <= -0.7",
+      "dialog_node": "node_18_1545660016499",
+      "previous_sibling": "node_17_1545660015429"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I guess you think $brandForReview phones are mostly OK. Try another one, maybe?"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_13_1545659687245",
+      "metadata": {},
+      "conditions": "$nluSentiment.score > 0.2",
+      "dialog_node": "node_15_1545660012136",
+      "previous_sibling": "node_14_1545659720881"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "It would seem that you are a really big fan of $brandForReview! Time for an upgrade!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_13_1545659687245",
+      "metadata": {},
+      "conditions": "$nluSentiment.score > 0.7",
+      "dialog_node": "node_14_1545659720881"
+    },
+    {
+      "type": "standard",
+      "title": "No Document Found",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sorry, I couldn't find anything to help. Could you perhaps try rephrasing your question?"
+              },
+              {
+                "text": "I didn't understand your question, could you try rephrasing please?"
+              },
+              {
+                "text": "I don't think I can help with this particular query, but please try asking me something else."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "Anything else",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1544451568484"
+      },
+      "conditions": "$discoveryData.topHitFound == 'false'",
+      "dialog_node": "node_20_1546015089780",
+      "previous_sibling": "node_19_1546014335387"
+    },
+    {
+      "type": "standard",
+      "title": "Document Found",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I found this question that is similar to yours: \"$discoveryData.topHitTitle\""
+              },
+              {
+                "text": "And this is the answer: \"$discoveryData.topHitAnswer\""
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "Anything else",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1544451568484"
+      },
+      "conditions": "$discoveryData.topHitFound == 'true'",
+      "dialog_node": "node_19_1546014335387"
+    },
+    {
+      "type": "standard",
+      "title": "New Phone",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I understand you want to choose a new phone."
+              },
+              {
+                "text": "So you'd like some help choosing a new phone."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#newphone",
+      "dialog_node": "node_2_1544466809786",
+      "previous_sibling": "node_2_1544451568484"
+    },
+    {
+      "type": "standard",
+      "title": "Submit Review",
+      "output": {
+        "generic": [
+          {
+            "title": "Which phone manufacturer is your review for?",
+            "options": [
+              {
+                "label": "Apple",
+                "value": {
+                  "input": {
+                    "text": "Apple"
+                  }
+                }
+              },
+              {
+                "label": "Google",
+                "value": {
+                  "input": {
+                    "text": "Google"
+                  }
+                }
+              },
+              {
+                "label": "Samsung",
+                "value": {
+                  "input": {
+                    "text": "Samsung"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "#submitreview",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1545393776407",
+      "previous_sibling": "node_1_1544809235701"
+    },
+    {
+      "type": "standard",
+      "title": "Help & Reset Context",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Can I help you with something else $foreName?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "costPerMonth": null,
+        "dataPerMonth": null,
+        "nluSentiment": null,
+        "contractStart": null,
+        "discoveryData": null,
+        "brandForReview": null
+      },
+      "metadata": {},
+      "dialog_node": "node_2_1544451568484",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else: call Watson Discovery",
+      "output": {
+        "generic": []
+      },
+      "actions": [
+        {
+          "name": "/<my-ibm-cloud-function-details>/actions/getDiscoveryTopHit",
+          "type": "cloud_function",
+          "parameters": {
+            "payload": "<?input.text?>"
+          },
+          "credentials": "$private.myCredentials",
+          "result_variable": "$discoveryData"
+        }
+      ],
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_1_1545393776407"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {},
+      "metadata": {
+        "fallback": "leave",
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "welcome || #greeting",
+      "digress_in": "does_not_return",
+      "dialog_node": "Welcome",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_4_1545397293168"
+    },
+    {
+      "type": "frame",
+      "title": "New Contract",
+      "output": {},
+      "metadata": {
+        "fallback": "leave",
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#newcontract",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1544809235701",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_2_1544466809786",
+      "digress_out_slots": "not_allowed"
+    },
+    {
+      "type": "standard",
+      "title": "Conversation Start",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "private": {
+          "myCredentials": {
+            "api_key": "<my-ibm-cloud-function-api-key>"
+          }
+        }
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "Welcome"
+      },
+      "conditions": "conversation_start",
+      "dialog_node": "node_4_1545397293168"
+    }
+  ],
+  "workspace_id": "8465f122-8e2f-4477-b5e2-470fac3eabcb",
+  "counterexamples": [],
+  "system_settings": {
+    "tooling": {
+      "store_generic_responses": true
+    }
+  },
+  "learning_opt_out": false,
+  "status": "Available"
+}
