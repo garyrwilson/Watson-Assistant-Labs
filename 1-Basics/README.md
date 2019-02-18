@@ -182,7 +182,7 @@ A _**dialog**_ uses the _intents_ and _entities_ that are identified in the user
 
 ![](./images/19-dialog-create.jpg)
 
-**(3)** `Welcome` and `Anything Else` nodes will be automatically generated for you. The former is used to initialise the dialog with the user, and the latter catches any user input that we don't provide a specific response for within our chatbot.
+**(3)** `Welcome` and `Anything else` nodes will be automatically generated for you. The former is used to initialise the dialog with the user, and the latter catches any user input that we don't provide a specific response for within our chatbot.
 
 Modify the `Welcome` node so it welcomes the user with the message `Hello. I am a mobile phone advisor. How can I help you?` by selecting the node, then changing the **Then Respond With** field.
 
@@ -226,7 +226,7 @@ Select the `New phone` node and change the **And finally** option to `Skip User 
 
 ![](./images/25-dialog-newphone-skip.jpg)
 
-**(7)** Finally, we need to create **four** child nodes of the `Ask User Preference` node that will ultimately decide the chatbots response to the user's input. When completed it will look like this:
+**(7)** Finally, we need to create **four** child nodes of the `Ask User Preference` node that will ultimately decide the chatbot's response to the user's input. When completed it will look like this:
 
 ![](./images/26-dialog-newphone-complete.jpg)
 
@@ -252,7 +252,7 @@ After we've provided a response to the user, we want to make sure we ask them if
 
 ![](./images/30-dialog-positive-jumptohelp.jpg)
 
-**(9)** Now create the `Brand Negative` child node. It should look pretty much like `Brand Positive`, except it will test for a `#negative` _intent_ and a `@brand` _entity_.
+**(9)** Now create the `Brand Negative` child node. It should look pretty much like `Brand Positive`, except it will test for a `#negative` _intent_ and a `@brand` _entity_. You can create this node from scratch as before, or you can `Duplicate` the `Brand Positive` node and customise it as described here.
 
 Use responses like these if you get negative sentiment about a brand:
 

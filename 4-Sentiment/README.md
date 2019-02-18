@@ -13,7 +13,7 @@ In practical terms, we'll build another _**Watson Assistant**_ _intent_, that al
 - Create `Submit Review` _intent_ and _dialog_
 
 ## Introduction to _**Watson NLU**_
-_**Watson Natural Language Understanding**_ is a collection of APIs that offer text analysis through _natural language processing_. This set of APIs can analyse text to help you understand its _concepts_, _entities_, _keywords_, _sentiment_, and more. You can also create a custom model to get specific results that are tailored to your domain.
+_**Watson Natural Language Understanding**_ is a collection of APIs that offer text analysis through _natural language processing_. This set of APIs can analyse text to help you understand its _concepts_, _entities_, _keywords_, _sentiment_, and more. You can also create custom models to get specific results that are tailored to your industry/domain.
 
 You can apply _**Watson NLU**_ to various use cases, including content recommendation, advertising optimisation, audience segmentation, data mining, and the one we will use here, voice-of-customer analysis.
 
@@ -54,11 +54,11 @@ In our case, we are just going to use the sentiment data to 'grade' the sentimen
 
 ![](./images/06-create-nlu-service2.jpg)
 
-**(2)** Once your service is created, click `Manage`. We'll need the **API key** from this page to access the service later, so copy it from here by clicking the `Copy to clipboard!` icon and save it by pasting it to a temporary file/note.
+**(2)** Once your service is created, click `Manage`. We'll need the `API key` and the `URL` from this page to access the service later, so copy them both from here and paste them to a temporary file or note. You can copy the `API Key` by clicking the `Copy to clipboard!` icon.
 
 ![](./images/13-nlu-credentials.jpg)
 
-**(3)** Next, we need a mechanism by which we can call the NLU service - passing our review text to the API - and return a sentiment score. We'll do this by creating an _**IBM Cloud Function**_.
+**(3)** Next, we need a mechanism by which we can call the NLU service, so we can passing our user's review text to the API and return a sentiment score. We'll do this by creating an _**IBM Cloud Function**_.
 
 With _**IBM Cloud Functions**_ you can write lightweight code that executes application logic in a scalable way. You can then run this code on-demand via requests from applications like our _**Watson Assistant**_ chatbot, or automatically in response to events.
 
@@ -73,7 +73,7 @@ As you've already seen, _**Watson Assistant**_ is great at collecting the requir
 
 ![](./images/07-cloud-function-example.jpg)
 
-**(3)** Fortunately, most web services we might want to use publish the format of their API calls, so building an _**IBM Cloud Function**_ to call them is usually relatively straightforward.
+**(3)** Fortunately, most of the web services we might want to take advantage of have published and documented API calls, so building an _**IBM Cloud Function**_ to call them is usually relatively straightforward, involving some small tweaks to sample code.
 
 IBM Watson service calls are documented [here](https://github.com/watson-developer-cloud) for a number of different programming languages. We're going to use _Javascript_ (as we'll also use it in later labs) - you can take a look at the documentation and templates we've modelled the calls on [here](https://github.com/watson-developer-cloud/node-sdk) if you wish, although we'll supply all of the code you need to complete the lab.
 
@@ -85,7 +85,7 @@ IBM Watson service calls are documented [here](https://github.com/watson-develop
 
 ![](./images/10-create-action.jpg)
 
-**(5)** Call your new action `getSentiment` and hit `Create`.
+**(5)** Call your new action `getSentiment`, ensure you select a `Runtime` of **Node.js 8**, and hit `Create`.
 
 ![](./images/11-create-get-sentiment.jpg)
 
@@ -106,9 +106,9 @@ function main({payload: payload}) {
 
     var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
     var nlu = new NaturalLanguageUnderstandingV1({
-      iam_apikey: '<iam_api_key>',
+      iam_apikey: '<nlu_api_key>',
       version: '2018-04-05',
-      url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
+      url: '<nlu_url>'
     });
 
     var promise = new Promise(function(resolve,reject) {
@@ -135,7 +135,12 @@ function main({payload: payload}) {
 return promise;
 }
 ```
-**(6)** You only need to make one change to this code. Replace `<iam_api_key>` with the value of the **API key** you saved earlier from your _**Watson NLU**_ credentials, then hit `Save`.
+**(6)** You only need to make two small changes to this code.
+
+- Replace `<nlu_api_key>` with the value of the **API key** you saved earlier from your _**Watson NLU**_ credentials
+- Replace `<nlu_url>` with the value of the **URL** you saved from the same credentials
+
+Now hit `Save`.
 
 ![](./images/14-get-sentiment-code-complete.jpg)
 
@@ -154,7 +159,7 @@ The code accepts text as input (_payload_), calls the _**Watson NLU**_ service (
 We've now created a _**IBM Cloud Function**_ that can accept text as input and calculate and return a _sentiment score_ for that text, so let's go and use it in a new _**Watson Assistant**_ _intent_ and _dialog_.
 
 ## Setup _**Watson Assistant**_ to use _**IBM Cloud Functions**_
-As you've already seen, you need to pass security credentials between services and applications in order to use them. In order to call _**IBM Cloud Functions**_ from within _**Watson Assistant**_ _dialogs_ we need to understand their credentials and encode them correctly.
+As you've already seen, we need to pass security credentials between services and applications in order to use them. In order to call our new `getSentiment` _**IBM Cloud Function**_ from within our _**Watson Assistant**_ _dialog_, we need to extract our _**IBM Cloud Functions**_ credentials, and ensure _**Watson Assistant**_ understands them correctly.
 
 **(1)** Get your _**IBM Cloud Function**_ **API Key** from the `API Key` option under `Getting Started`. There's a copy icon available to copy the key to the clipboard.
 
@@ -190,9 +195,9 @@ Now regardless of integration type our chatbot will always start correctly, and 
 
 ![](./images/20-intent-submit-review.jpg)
 
-**(2)** Now let's create a `Submit review` _dialog_ node below our `New contract` node, which tests for our `#submitreview` _intent_.
+**(2)** Now let's create a `Submit Review` _dialog_ node below our `New contract` node, which tests for our `#submitreview` _intent_.
 
-This time - instead of using _slots_ - after we've asked the user which brand they like to provide a review for, we'll present them with a list of available brand _**options**_ using the rich response capability within _**Watson Assistant**_.
+This time - instead of using _slots_ - after we've asked the user which brand they'd like to provide a review for, we'll present them with a list of available brand _**options**_ using the rich response capability within _**Watson Assistant**_.
 
 Customise this node to **Then Respond with** `Option`. Use `Which phone manufacturer is your review for?` in the **Title** field, and add **List label** and **Value** pairs for `Apple`, `Google` and `Samsung`.
 
@@ -239,7 +244,7 @@ _**Watson Assistant's**_ _JSON editor_ provides an alternative method for defini
   ]
 }
 ```
-The **only** thing you will need to replace here is `<my-getSentiment-endpoint>`. You can get the name of your _**endpoint**_ by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ https://openwhisk.ng.bluemix.net/api/v1/namespaces
+The **only** thing you will need to replace here is `<my-getSentiment-endpoint>`. You can get the name of your _**endpoint**_ by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ _**.../namespaces**_.
 
 It should look something like:
 ```Javascript
@@ -250,13 +255,15 @@ It should look something like:
 
 ![](./images/25-get-function-api-name2.jpg)
 
+![](./images/25a-cf-json-editor-code.jpg)
+
 **(7)** When we reach this node in the _dialog_, we will now call our _**IBM Cloud Function,**_ passing `<?input.text?>` as our payload.
 
 `<?input.text?>` is a special _**Watson Assistant**_ variable that always contains _the last input the user has provided_. In this case, this will be the review text we want to sent to our _**Watson NLU**_ sentiment analysis function.
 
 You can see that we are also passing the _**IBM Cloud Function**_ credentials we set up earlier, and the data returned by the function will be stored in a _context variable_ we have called `$nluSentiment`.
 
-**(8)** Now we should have a _sentiment score_ we can use to create a response for the user. In fact, we are going to create two responses - one that informs the user whether the overall review is _positive, ambivalent or negative_, and one that is customised depending on the overall _strength_ of sentiment.
+**(8)** When the dialog executes our `getSentiment` function, it will return a _sentiment score_ we can use to create a tailored response for the user. In fact, we are going to create two responses - one that informs the user whether the overall review is _positive, ambivalent or negative_, and one that is customised depending on the overall _strength_ of sentiment.
 
 Create a child node of `Call getSentiment function`, and call it `Send Positive/Negative Message`. Use **If assistant recognizes** `true`.
 

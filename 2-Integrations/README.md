@@ -12,9 +12,9 @@ In this lab we'll build a web-hosted chat widget that will allow you to test the
 - Setup a live web-hosted chatbot
 
 ## Create an _**Assistant**_ for your skill
-An _**assistant**_ is the user-facing component of _**Watson Assistant**_ that manages the flow of information between your _skills_ and your users. _Assistants_ also allow you to create _**integrations**_ that publish your chatbot to the channels your customers will typically go to for help, e.g. _Slack_, _Facebook Messenger_, _Wordpress_.
+An _**assistant**_ is the user-facing component of _**Watson Assistant**_ that manages the flow of information between your _skills_ and your users. _Assistants_ also allow you to create _**integrations**_ that publish your chatbot to the channels your customers will typically go to for help, e.g. _Slack_, _Facebook Messenger_, _Wordpress_, etc.
 
-**(1)** Select `Assistants` from the menu bar and `Create new`.
+**(1)** Select `IBM Watson Assistant` from the top of the screen, then `Assistants` from the menu bar and `Create new`.
 
 ![](./images/01-create-assistant.jpg)
 
@@ -140,29 +140,32 @@ Make sure you click `Save Changes`.
 
 ![](./images/33-chatbot-platform-general.jpg)
 
-**(4)** Next you'll need an **API key** from _**Watson Assistant**_ in order to connect your chatbot logic to the web application that'll be generated for you.
+**(4)** Next you'll need security credentials from _**Watson Assistant**_ in order to connect your chatbot skill to the web application that will be generated for you.
 
-From your Phone Advisor _Assistants_ view, click `View API Details`. From the next screen, you're going to need the `Username` and `Password`.
+From the `Manage` screen within your _**Watson Assistant**_ service in _**IBM Cloud**_, you will need the `URL` and the `API key`. You can copy the API Key by selecting the `Copy to Clipboard!` icon.
 
 ![](./images/34-view-api-details.jpg)
 
-![](./images/35-watson-api-credentials.jpg)
+In the _Chatbot Platform_:
+- copy and paste in the URL (1) from your _**Watson Assistant**_ credentials
+- enter the word `apikey` as the `Username`
+- copy and paste the `API Key` (2) from your _**Watson Assistant**_ credentials into the `Password` field
 
-Copy and paste these to the _Chatbot Platform_ - click the `Watson Assistant` option from the menu bar, enter the details, and hit `Save`.
+Now hit `Save`.
 
-![](./images/36-chatbot-platform-apikey.jpg)
+![](./images/35-chatbot-platform-apikey.jpg)
 
 **(5)** At this point the _Chatbot Platform_ application connects to _**Watson Assistant**_ and display a list of the _skills_ you've created, in a pulldown menu under **Workspace name**. If you had created multiple skills you would select the one you want to use here. As we've only created one so far, it's automatically selected:
 
-![](./images/37-chatbot-platform-workspace.jpg)
+![](./images/36-chatbot-platform-workspace.jpg)
 
 **(6)** Finally, click the `Sharing & Security` menu option. Here you'll see a live link to your web chatbot. If you want a customised link then add some text here - it will be appended to the link URL. Also here, you can enter and save a password that will be used to login to your chatbot app.
 
-![](./images/38-chatbot-platform-sharing.jpg)
+![](./images/37-chatbot-platform-sharing.jpg)
 
 **(7)** Now click the URL link, enter the password you've set, and you'll see your web-based chatbot! Test it out with your existing _dialog_ as before.
 
-![](./images/39-live-web-chatbot.jpg)
+![](./images/38-live-web-chatbot.jpg)
 
 ## Summary
 Well done! You've now built a basic chatbot that uses three user interfaces!

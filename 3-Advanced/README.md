@@ -14,7 +14,7 @@ In this lab we'll further develop our chatbot so it can also recommend a new mob
 - using _Spring Expression Language (SpEL)_
 
 ## Part 1: Managing Multiple User Inputs
-_**Slots**_ are a function within _**Watson Assistant**_ that allow you to more easily gather multiple pieces of information from a user. Slots collect information at the user's pace - if some of the information is provided upfront it is saved, and then the service will only ask for the details that still need to be collected.
+_**Slots**_ are a function within _**Watson Assistant**_ that allow you to more easily gather multiple pieces of information from a user. Slots collect information at the user's pace - if some of the information is provided up front it is saved, and then the service will only ask for the details that still need to be collected.
 
 For example, when making making a dinner reservation you would probably want to capture the number of guests, restaurant name, date and time. _Slots_ guide the user down the _dialog_ path to ensure all of the required data is captured, by prompting the user for each required piece of information.
 
@@ -48,7 +48,7 @@ In your Watson Assistant skill, go to `Entities`, `System Entities`, and turn on
 
 ![](./images/07-slots-multiple-responses.jpg)
 
-**(5)** We'll now configure our _dialog_ node to ensure we collect the three pieces of information required and provide a summarising response, like so:  
+**(5)** We are now going to configure our _dialog_ node to ensure we collect the three pieces of information required and provide a summarising response, like so:  
 
 ![](./images/08-slots-collect-data.jpg)
 
@@ -80,7 +80,7 @@ Make sure you've added this text to the **Then respond with** field.
 
 **(10)** Note that the **@sys-date** _entity_ doesn't have to be in a specific format.  _**Watson Assistant**_ will also pick up and translate _entities_ like '_now_', '_tomorrow_', '_next month_', etc.
 
-**(11)** Now we need to build the contract recommendation _dialog_. We'll do this by adding a  child node to our `New Contract` _dialog_ node (call it `Recommend Contract`) that provides some options based upon the user's existing data usage and spend.
+**(11)** Now we need to build the contract recommendation _dialog_. We'll do this by adding a  child node to our `New Contract` _dialog_ node (call it `Recommend Contract`) which will provide a contract recommendation based upon the user's existing data usage and spend.
 
 Ensure this child node can cater for **Multiple responses**, by hitting `Customize` and toggling the option to `On`. Now set **If assistant recognizes** to `true`, to ensure we immediately drop into our checks.
 
@@ -164,7 +164,7 @@ Open the `Context editor` in the `Get Name` node, and add a variable called `$fo
 ```javascript
 "<? $name.extract('^[^\\s]+',0) ?>"
 ```
-This expression takes the variable `$name`, and uses the _SpEL_ **extract** function to return just the `$forename`. The pattern within the function returns everything from the start of the string until it reaches the first whitespace character (e.g. a space).
+This expression takes the variable `$name`, and uses the _SpEL_ **extract** function to return just the `$foreName`. The pattern within the function returns everything from the start of the string until it reaches the first whitespace character (e.g. a space).
 
 If you want to know more about how this works, you can click [here](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#expressions) for more information on _SpEL_. [This site](https://regexr.com/) is also really useful in helping to interactively build and test expressions.
 

@@ -3,7 +3,7 @@ In the final part of this lab we're going to show you how you can integrate **ex
 - _retrieve data from other websites_, e.g. check the weather forecast, look up flight arrival times
 - _send requests to third party applications_, e.g. reserve a table at a restaurant, book a hire car
 
-In our case we're going to continue the theme of providing mobile phone services assistance, by retrieving and presenting some information about specific mobile phone models for the user, if they ask for it. We'll create a new _intent_, show you how to define _contextual entities_ and how to _import_ them, and create a _dialog_ that executes an _**IBM Cloud Function**_ to get information about a phone from [Wikipedia](https://en.wikipedia.org/wiki/Main_Page).
+In our case we're going to continue the theme of providing mobile phone services assistance, by retrieving and presenting some information about specific mobile phone models for the user, if they ask for it. We'll create a new _intent_, show you how to define _contextual entities_ and how to _import entities_, and create a _dialog_ that executes an _**IBM Cloud Function**_ to get information about a phone from [Wikipedia](https://en.wikipedia.org/wiki/Main_Page).
 
 ## Requirements
 - Successful completion of [Lab 5: Extending Your Chatbot with Watson Discovery](../5-Discovery).
@@ -30,7 +30,7 @@ We want our final chatbot function to allow the user to ask for some information
 
 ![](./images/01-phoneinfo-intent.jpg)
 
-**(2)** Next we need to create an _entity_ called `@model` to capture the name of the mobile phone model we want some information about. Previously we created our _entities_ in [Lab 1: Cognitive Chatbot Basics](./1-Basics) manually, but there's another couple of ways of building entities that are useful to understand.
+**(2)** Next we need to create an _entity_ called `@model` to capture the name of the mobile phone model we want some information about. Previously we created our _entities_ in [Lab 1: Cognitive Chatbot Basics](../1-Basics) manually, but there's another couple of ways of building entities that are useful to understand.
 
 The first is _**contextual entities**_. We create these by annotating occurrences of the _entity_ in sample sentences to teach the service about _the context in which the entity is typically used_. In order to train a _contextual entity_, we use our _intent_ user examples, which provide readily-available sentences to annotate.
 
@@ -236,7 +236,7 @@ In this code, the `searchForArticles` function extracts the **title** of the fir
   ]
 }
 ```
-Replace `<my-searchWikipedia-endpoint>` with the name of your `searchWikipedia` _endpoint_ - find it by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then selecting everything in the REST API URL that comes **after** https://openwhisk.ng.bluemix.net/api/v1/namespaces
+Replace `<my-searchWikipedia-endpoint>` with the name of your `searchWikipedia` _endpoint_ - find it by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ _**.../namespaces**_.
 
 It'll look something like this:
 ```Javascript

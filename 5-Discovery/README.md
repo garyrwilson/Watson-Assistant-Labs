@@ -56,14 +56,14 @@ After a short time you should see the service as **Provisioned** - you may need 
 
 When the service is provisioned, select it from the list.
 
-**(3)** On the **Manage** page, copy the `API Key` as we'll need it later when we create an _**IBM Cloud Function**_ call using _Discovery_. Once you've done that, select `Launch tool` to go to the _**Watson Discovery**_ tooling application.
+**(3)** On the **Manage** page, copy the `API Key` and `URL` as we'll need them later when we create an _**IBM Cloud Function**_ call that uses the _Discovery_ service. Once you've done that, select `Launch tool` to go to the _**Watson Discovery**_ tooling application.
 
 ![](./images/06-discovery-api-key.jpg)
 
 ## Build a _Discovery_ document collection
 Now let's create a _**Watson Discovery**_ document _**collection**_. A _collection_ is a group of _**documents**_ that you want to be able to search. _Documents_ contain data of potential use to an application, e.g. question and answer pairs for use by a chatbot, FAQs, webpage documentation etc. _**Watson Discovery**_ can ingest documents in _JSON, DOC, HTML_ and _PDF_ formats.
 
-**(1)** In the tooling you'll see there's a **Watson Discovery News** collection that's already available. _Discovery News_ is a public data set that has been pre-enriched with cognitive insights from millions of internet news articles.
+**(1)** After you've dismissed the welcome messages, you'll see in the tooling that there's a **Watson Discovery News** collection already available. _Discovery News_ is a public data set that has been pre-enriched with cognitive insights from millions of internet news articles.
 
 _Discovery News English_ is automatically updated with approximately 425,000 new articles daily, and the _collection_ can be used for many purposes, including:
 - _News alerting_ - create news alerts by taking advantage of the support for _entities_, _keywords_, _categories_, and _sentiment analysis_ to watch for both news, and how it is perceived.
@@ -72,7 +72,7 @@ _Discovery News English_ is automatically updated with approximately 425,000 new
 
 **(2)** We are going to create our own _collection_ from [this dataset](./data/discovery_data.zip) - it contains 1000 JSON documents, each containing a single question/answer pair that will help our chatbot answer questions about more specific mobile phone related issues.
 
-**Download** and **extract** [the dataset](./data/discoverydata.zip) now.
+**Download** and **extract** [the dataset](./data/discovery_data.zip) now.
 
 Here's one of the documents, to show you how they are formatted:
 ```javascript
@@ -88,19 +88,11 @@ Here's one of the documents, to show you how they are formatted:
 
 ![](./images/08-setup-private-data.jpg)
 
-**(4)** Give your new _collection_ a name (e.g. `Phone-Advisor`), use the `Default Configuration` and click `Create`.
+**(4)** Give your new _collection_ a name (e.g. `Phone-Advisor`) and click `Create`.
 
 ![](./images/09-name-collection.jpg)
 
-**(5)** Next, we are going to create a _**custom configuration**_ that will allow us to apply enrichments to the documents in our dataset. Click on `Switch` and then `Create a new configuration`
-
-![](./images/10-switch-config.jpg)
-
-![](./images/11-create-new-config.jpg)
-
-Now give your configuration a name (e.g. `Phone-Advisor-Configuration`), and hit `Create`.
-
-**(6)** _**Watson Discovery**_ can **enrich** (_add cognitive metadata to_) your ingested documents with semantic information collected by these nine Watson functions, similar to the ones you saw earlier when using _**Watson Natural Language Understanding**_:
+**(5)** _**Watson Discovery**_ can **enrich** (_add cognitive metadata to_) your ingested documents with semantic information collected by these nine Watson functions, similar to the ones you saw earlier when using _**Watson Natural Language Understanding**_:
 - Entity Extraction
 - Sentiment Analysis
 - Category Classification
@@ -115,48 +107,64 @@ An example of how we might use this as part of a chatbot application would be to
 
 You can find out more about enrichment [here](https://cloud.ibm.com/docs/services/discovery/building.html#adding-enrichments).
 
-**(7)** First, delete all of the default enrichments by using the `-` icon, and hit `Apply and Save`. Then upload one sample JSON document from the previously extracted dataset by selecting **or browse from computer** and choosing one of the JSON files.
+**(6)** In order to demonstrate this, we'll add the sentiment analysis enrichment to all of the potential user responses held within our documents - if you remember, these are contained in the field `Accepted_Answer`.
 
-![](./images/12-delete-enrichments.jpg)
+On the **Overview** screen, select `or browse from computer`, navigate to the directory holding your extracted documents, and open just the first document in the list.
 
-![](./images/13-select-json-doc.jpg)
+![](./images/10-upload-first-document.jpg)
 
-**(8)** Click on the uploaded document and then select the **Add a field to enrich** dropdown, then `Accepted_Answer`.
+**(7)** When the document is successfully uploaded, _Discovery_ displays the fields extracted from it (in this case `Title` and `Accepted_Answer`). The other identified fields are ones that _Discovery_ creates as part of its collection metadata.
 
-![](./images/14-select-sample-json.jpg)
+Select `Add enrichments`:
 
-![](./images/15-answer-enrich.jpg)
+![](./images/11-add-enrichments.jpg)
 
-**(9)** For the `Accepted_Answer` field, select `Add enrichments`, then add `Sentiment Analysis` from the list of possible enrichments presented, and hit `Done`. Your config should then look like this:
+**(8)** _**Watson Discovery**_ automatically applies enrichments to any fields named `text`. This does not apply to our documents, so delete this enrichment (see 1), and then from the `Add a field to enrich pulldown`, select `Accepted_Answer` (see 2):
 
-![](./images/16-answer-add-sentiment.jpg)
+![](./images/12-add-to-accepted-answer.jpg)
 
-Hit `Apply and Save` then `Close`.
+**(9)** For the `Accepted_Answer` field, select `Add enrichments`, then add `Sentiment Analysis` from the list of possible enrichments presented, and hit `Done`.
 
-**(10)** Now go back into your `Phone-Advisor` _collection_.  At this point, we are going to upload all of the _documents_ to the _collection_ in order to create our knowledge base. As we do this _**Watson Discovery**_ will build the sentiment metadata for the `Accepted_Answer` field within each document.
+![](./images/13-add-aa-enrichments.jpg)
 
-Drag and drop or browse and select the JSON documents from the extracted dataset - there are 999 in total to import.
+To complete the customisation, select `Apply changes to collection`:
 
-![](./images/17-add-documents.jpg)
+![](./images/14-apply-changes-to-collection.jpg)
 
-**(11)** _**Watson Discovery**_ will start to upload and process the files as you add them ... it will take about 10-15 minutes to import all of them. You'll see the **Documents** count increase and the **Sentiment Analysis** values change as _**Watson Discovery**_ processes the files.
+**(10)** You will now be presented with the opportunity to upload further documents. **Close this window down**, as instead we'll upload from the **Overview** screen, as from there we can see the documents being ingested in realtime.
 
-![](./images/18-document-ingestion.jpg)
+After closing the window down, select your collection name link to go to the **Overview** screen.
 
-**(12)** Whilst on this screen select `Use this collection in API` and make a note of the **Environment ID** and **Collection ID** values presented, as we'll need them for the _**IBM Cloud Function**_ we'll create shortly.
+![](./images/15-go-to-overview.jpg)
 
-![](./images/19-collection-environment-ids.jpg)
+**(11)** At this point, we are going to upload all of the _documents_ to the _collection_ in order to create our knowledge base. As we do this _**Watson Discovery**_ will build the sentiment metadata for the `Accepted_Answer` field within each document.
+
+Select `Upload documents`, then `or browse from computer`, find the directory holding your extracted documents again, and select all 999 JSON documents.
+
+![](./images/16-upload-documents.jpg)
+
+![](./images/17-browse-from-computer.jpg)
+
+![](./images/18-select-all-documents.jpg)
+
+**(12)** _**Watson Discovery**_ will now start to upload and process the files as you add them ... it will take about 10-15 minutes to ingest all of them. You'll see the **documents** count increase and the **Sentiment Analysis** values change as _**Watson Discovery**_ processes the files.
+
+![](./images/19-document-count-increasing.jpg)
+
+**(13)** Whilst on this screen select the `View API Details` icon and make a note of the **Environment ID** and **Collection ID** values presented, as we'll need them for the _**IBM Cloud Function**_ we'll create shortly.
+
+![](./images/20-api-details.jpg)
 
 ## Query the collection using _**Watson Discovery Query Builder**_
 **(1)** Wait until at least _100 documents_ have been added so you have a decent number to work with, then let's start to look at how we can query the _collection_. Click on `Build your own query`:
 
-![](./images/20-build-own-query.jpg)
+![](./images/21-build-own-query.jpg)
 
 _Note: Document uploading and processing is still ongoing in the background._
 
 **(2)** If you select the `Run query` button at the bottom of the screen you will see a selection of the _documents_ in the _collection_ that have been uploaded so far. Select the curly brackets next to one of the `enriched_Accepted_Answer` fields to see the sentiment score _**Watson Discovery**_ has applied to the document.
 
-![](./images/21-run-query.jpg)
+![](./images/22-run-query.jpg)
 
 **(3)** Next, we'll make use of our _sentiment analysis_ enrichment by showing how you can filter out answers that have negative sentiment. Using **Filter which documents you query**, select:
 
@@ -168,13 +176,13 @@ At this point also set **Passages** to `No` in `More options`. _**Passage Retrie
 
 If you run this query you'll now see the answer data is filtered by _positive_ and _neutral_ answers only.
 
-![](./images/22-non-negative-query.jpg)
+![](./images/23-non-negative-query.jpg)
 
 **(4)** You can test a _**natural language query**_ of the _collection_ by asking a question in **Search for documents**. _Discovery_ returns documents in order of the _confidence_ score it gives each potential match.
 
 Try `My Nexus 7 can't connect to Mac` as shown in the example here.
 
-![](./images/23-nl-query.jpg)
+![](./images/24-nl-query.jpg)
 
 Note that even though our query is _"My Nexus 7 can't connect to Mac"_, we still get a match with _"Nexus 7 (2012) no longer connecting via USB Mac OS X"_. This is because the natural language processing capabilities of _**Watson Discovery**_ are taking care of the nuances of language, so that we don't have to specify the exact words that match a document in order to return it from the collection.
 
@@ -187,7 +195,7 @@ For more on building queries, have a look at the tutorial [here](https://cloud.i
 ## Create a _Discovery_ _**IBM Cloud Function**_
 **(1)** Go to _**IBM Cloud Functions**_ and create a new action via the sidebar menu in IBM Cloud, or directly via [this link](https://cloud.ibm.com/openwhisk/create/action). Call it `getDiscoveryTopHit`.
 
-![](./images/24-create-action.jpg)
+![](./images/25-create-action.jpg)
 
 **(2)** In the code editor delete the default code and replace it with this:
 
@@ -212,8 +220,8 @@ function main({payload: payload}) {
     var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 
     var discovery = new DiscoveryV1({
-      iam_apikey: '<iam_api_key>',
-      url: 'https://gateway.watsonplatform.net/discovery/api/',
+      iam_apikey: '<discovery_api_key>',
+      url: '<discovery_url>',
       version: '2017-09-01'
     });
 
@@ -246,12 +254,13 @@ function main({payload: payload}) {
 	return promise;
 }
 ```
-**(3)** You need to make three changes before saving the code:
-- Change `<iam_api_key>` to the value of the `API Key` you saved from your _**Watson Discovery**_ credentials when you created the service
-- Change `<my_environment_id>` to the **Environment ID** value you saved earlier from with the _**Watson Discovery**_ tooling
-- Change `<my_collection_id>` to the **Collection ID** value you saved earlier from with the _**Watson Discovery**_ tooling
+**(3)** You need to make four changes before saving the code:
+- Change `<discovery_api_key>` to the value of the `API Key` you saved from your _**Watson Discovery**_ credentials when you created the service
+- Replace `<discovery_url>` with the value of the **URL** you saved from the same credentials
+- Change `<my_environment_id>` to the **Environment ID** value you saved earlier from within the _**Watson Discovery**_ tooling
+- Change `<my_collection_id>` to the **Collection ID** value you saved earlier from within the _**Watson Discovery**_ tooling
 
-![](./images/25-discovery-function-code.jpg)
+![](./images/26-discovery-function-code.jpg)
 
 This code - which is again based on the IBM Watson documented code snippets [here](https://github.com/watson-developer-cloud/node-sdk) - accepts text as input (_payload_), calls your _**Watson Discovery**_ service and returns the following results:
 - _topHitFound_:  
@@ -267,7 +276,7 @@ This code - which is again based on the IBM Watson documented code snippets [her
 ```
 **(5)** Hit `Invoke`, to pass this test query to the _Discovery_ service, and view the returned results.
 
-![](./images/26-test-discovery-function.jpg)
+![](./images/27-test-discovery-function.jpg)
 
 Now let's use this in our _**Watson Assistant**_ dialog.
 
@@ -284,7 +293,7 @@ If you remember, the `anything_else` special condition is triggered at the end o
 
 Select the `Anything else` _dialog_ node and rename it to `Anything else: call Watson Discovery`, then delete the existing text responses.
 
-![](./images/27-repurpose-anything-else.jpg)
+![](./images/28-repurpose-anything-else.jpg)
 
 **(2)** Open the _JSON editor_ for the node, and replace the existing code with this:
 ```Javascript
@@ -305,13 +314,13 @@ Select the `Anything else` _dialog_ node and rename it to `Anything else: call W
   ]
 }
 ```
-Again, you will need to replace `<my-getDiscoveryTopHit-endpoint>` with the name of your `getDiscoveryTopHit` _endpoint_, by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then selecting everything in the REST API URL that comes **after** https://openwhisk.ng.bluemix.net/api/v1/namespaces
+Again, you will need to replace `<my-getDiscoveryTopHit-endpoint>` with the name of your `getDiscoveryTopHit` _endpoint_, by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ _**.../namespaces**_.
 
 It should look something like:
 ```Javascript
 /jerry.seinfeld_dev/actions/getDiscoveryTopHit
 ```
-![](./images/28-anything-else-code.jpg)
+![](./images/29-anything-else-code.jpg)
 
 **(3)** Now, if we don't recognise an _intent_ we will call our `getDiscoveryTopHit` _**IBM Cloud Function**_, passing the user input as our payload and using the credentials we set up in the last lab, and expect a JSON object `context variable` `$discoveryData` containing the values returned from the call.
 
@@ -330,25 +339,29 @@ $discoveryData.topHitFound == 'true'
 
 - Finally here, ensure this node jumps to the `Help & Reset Context` node.
 
-![](./images/29-document-found.jpg)
+![](./images/30-document-found.jpg)
 
 **(5)** Create another other child node called `No Document Found` which runs if `$discoveryData.topHitFound == 'false'`.
 
-Set response variations to `random`, and enter some text responses similar to the ones below. We'll now only get an _"I didn't understand"_ message if we draw a blank from **both** our _**Watson Assistant**_ _intents_ and our _**Watson Discovery**_ _collection_.
+Set response variations to `random`, and enter some text responses similar to the ones below. We'll only get this type of _"I didn't understand"_ message now if we draw a blank from **both** our _**Watson Assistant**_ _intents_ and our _**Watson Discovery**_ _collection_.
+
+- `Sorry I couldn't find anything to help. Could you perhaps try rephrasing your question?`
+- `I didn't understand your question, could you try rephrasing please?`
+- `I don't think I can help with this particular query, but please try asking me something else.`
 
 Once again, ensure this node jumps to the `Help & Reset Context` node.
 
-![](./images/30-no-document-found.jpg)
+![](./images/31-no-document-found.jpg)
 
 **(6)** Finally, we need to make sure our dialog flows correctly, and that we _reset our context variables_.
 
 Configure the `Anything else: call Watson Discovery` node so that it drops into its child nodes after the `getDiscoveryTopHit` function call.
 
-![](./images/31-anything-else-skip-input.jpg)
+![](./images/32-anything-else-skip-input.jpg)
 
 And reinitialise the `$discoveryData` _context variable_ by adding it with a `null` value to the `Help & Reset Context` node _context editor_.
 
-![](./images/32-reset-context.jpg)
+![](./images/33-reset-context.jpg)
 
 **(7)** You should now test your chatbot with user input that follows both paths, e.g.
   - `Can I stop check-ins working` (_Discovery_)
@@ -359,9 +372,9 @@ And reinitialise the `$discoveryData` _context variable_ by adding it with a `nu
 
 Use `Try It` to work out any issues, then use one of your _integrations_ to see it working in production!
 
-![](./images/33-slack-testing-1.jpg)
-![](./images/34-slack-testing-2.jpg)
-![](./images/35-slack-testing-3.jpg)
+![](./images/34-slack-testing-1.jpg)
+![](./images/35-slack-testing-2.jpg)
+![](./images/36-slack-testing-3.jpg)
 
 ## Summary
 Congratulations! You've extended your chatbot to include _long-tail responses_ using a _**Watson Discovery**_ collection. Now if your chatbot can't find a specific response to your user's question within _**Watson Assistant**_, it will use _Discovery_ to search for answers from a larger corpus of information.
