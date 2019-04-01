@@ -147,9 +147,9 @@ From the `Manage` screen within your _**Watson Assistant**_ service in _**IBM Cl
 ![](./images/34-view-api-details.jpg)
 
 In the _Chatbot Platform_:
-- copy and paste in the URL (1) from your _**Watson Assistant**_ credentials
-- enter the word `apikey` as the `Username`
-- copy and paste the `API Key` (2) from your _**Watson Assistant**_ credentials into the `Password` field
+- select `Watson Assistant` from the sidebar
+- copy the URL (1) from your _**Watson Assistant**_ credentials in IBM Cloud, and paste it to the `Url` field
+- copy the `API Key` (2) from your _**Watson Assistant**_ credentials into the `Apikey` field
 
 Now hit `Save`.
 
