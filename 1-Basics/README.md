@@ -34,16 +34,14 @@ Scroll down and ensure you are using the `Lite` plan, then hit `Create`.
 
 ![](./images/02-assistant-service-create.jpg)
 
-**(3)** Launch the **_Watson Assistant_** tool by clicking on `Launch tool`.
+**(3)** Click on `Launch Watson Assistant`.
 
 ![](./images/03-assistant-service-launch.jpg)
 
 ## Understanding user intent: create _**intents**_ and _**entities**_
 **(1)** The first thing we need to do in **_Watson Assistant_** is create a _**Skill**_. A _**skill**_ contains the training data and machine learning logic that enables your chatbot to understand and help users and customers.
 
-Hit `Create a Skill`, then `Create new`. Enter the name `Phone Advisor` for your skill, and hit `Create`:
-
-![](./images/04-create-skill.jpg)
+Click on `Skills` in the menu bar, then `Create Skill`. Enter the name `Phone Advisor` for your skill, and hit `Create dialog skill`:
 
 ![](./images/05-create-skill-new.jpg)
 
@@ -57,7 +55,7 @@ An _**intent**_ represents the **purpose** of a user's input. By recognising the
 
 Choosing the correct _intent_ for a user's input is the first step in providing a useful response. The _intents_ you identify for your application will determine the dialog flows you need to create; they also might determine which back-end systems your application needs to integrate with in order to complete customer requests (such as customer databases or payment-processing systems).
 
-Select `Add Intent` to get started, and create an _intent_ name of `greeting`. You can add a description for your _intent_ here if you wish.
+Select `Create Intent` to get started, and create an _intent_ name of `greeting`. You can add a description for your _intent_ here if you wish.
 
 ![](./images/07-add-intent.jpg)
 
@@ -74,7 +72,7 @@ Feel free to add a few more variations of your own.
 
 ![](./images/09-intent-greeting-examples.jpg)
 
-**(4)** Repeat this process for our next _intent_ named `positive`:
+**(4)** When you've done, click on the arrow at the top left of the screen to go back, then hit `Create intent` to repeat the process for our next _intent_ named `positive`:
 
 - **Intent name:** `positive`
 - **Description:** `Expressing positive opinion about mobile phones`
@@ -130,7 +128,7 @@ An _**entity**_ represents a term or object in the user's input that provides **
 
 _Entities_ make it possible for a single _intent_ to represent multiple specific actions. For example in our case, the `positive` _intent_ can be used with _entities_ to recognise positive feeling about _different_ mobile phones or their attributes. So in effect, an _entity_ defines _a class of objects_, with specific values representing the possible objects in that class.
 
-Select `Add Entity`, then enter a _entity_ name of `brand` and hit `Create Entity`.
+Select `Entities` from the menu bar, then `Create Entity`. Next enter an _entity_ name of `brand` and hit `Create Entity`.
 
 ![](./images/12-add-entity.jpg)
 
@@ -178,7 +176,7 @@ Take a look at the [Watson Assistant documentation](https://cloud.ibm.com/docs/s
 
 A _**dialog**_ uses the _intents_ and _entities_ that are identified in the user's input, plus _context_ from the application that uses _**Watson Assistant**_, to interact with the user and ultimately provide a useful response. Our _dialog_ tree should help the user choose a new mobile phone based on an existing preference or a characteristic important to the user.
 
-**(2)** Select `Dialog` from the menu bar, and then hit `Create`.
+**(2)** Select `Dialog` from the menu bar, and then hit `Create dialog`.
 
 ![](./images/19-dialog-create.jpg)
 

@@ -99,7 +99,7 @@ Also, _contextual entities_ will still function - even if we haven't defined a v
 
 ## Build `searchWikipedia` _**IBM Cloud Function**_
 
-**(1)** Now let's build an **_IBM Cloud Function_** that will search **_Wikipedia_** and return information from that repository about a phone model. On the [Create Action page](https://cloud.ibm.com/openwhisk/create/action), enter `searchWikipedia` as the **Action Name** and hit `Create`.
+**(1)** Now let's build an **_IBM Cloud Function_** that will search **_Wikipedia_** and return information from that repository about a phone model. On the [Create Action page](https://cloud.ibm.com/openwhisk/create/action), enter `searchWikipediaXXX` as the **Action Name** (replacing `XXX` with your initials), select runtime `Node.js 8`, and hit `Create`.
 
 ![](./images/16-create-cloud-function.jpg)
 
@@ -208,6 +208,10 @@ In this code, the `searchForArticles` function extracts the **title** of the fir
 ```
 ![](./images/19-test-change-input.jpg)
 
+**(6)** Now go to `Endpoints` once more, tick `Enable as Web Action`, then `Save`.
+
+![](./images/19a-enable-web-action.jpg)
+
 ## Create `Phone Information` _dialog_
 **(1)** The final step is to build a _dialog_ to use our new _intent_, _entity_ and _**IBM Cloud Function**_. Select the `Anything else: call Watson Discovery` node, and use the three dots icon to select `Add node above`. It's _really_ important that you add this new dialog node **above** here, as any nodes in the _dialog_ tree that appear after an `anything_else` test will never be evaluated.
 
@@ -226,21 +230,20 @@ In this code, the `searchForArticles` function extracts the **title** of the fir
   "actions": [
     {
       "name": "<my-searchWikipedia-endpoint>",
-      "type": "cloud_function",
+      "type": "web_action",
       "parameters": {
         "payload": "$phoneModel"
       },
-      "credentials": "$private.myCredentials",
       "result_variable": "$article"
     }
   ]
 }
 ```
-Replace `<my-searchWikipedia-endpoint>` with the name of your `searchWikipedia` _endpoint_ - find it by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ _**.../namespaces**_.
+Replace `<my-searchWikipedia-endpoint>` with the name of your `searchWikipediaXXX` _endpoint_ - find it by going back to your _**IBM Cloud Function**_, clicking `Endpoints` from the sidebar, and copying everything in the **Web Action URL** _after_ _**.../web/**_.
 
 It'll look something like this:
 ```Javascript
-/jerry.seinfeld_dev/actions/searchWikipedia
+jerry.seinfeld_dev/default/searchWikipediaXXX.json
 ```
 ![](./images/22-phone-information-json.jpg)
 
@@ -286,7 +289,6 @@ You've reached the end of the _**Watson Assistant**_ labs! Over the course of si
 - access third party services in order to integrate information from external sources within your chatbot
 
 If you want to download the **complete and final** _**Watson Assistant**_ _skill_ you can do so [here](./assistant/skill-Phone-Advisor-lab-6.json). Remember, if you import this version of the _skill_, you'll have to modify:
-- the `Conversation Start` node to reflect your _**IBM Cloud Function**_ credentials
-- the `Call getSentiment function` node to refer to your `getSentiment` _**IBM Cloud Function**_ API details
-- the `Phone Information` node to refer to your `searchWikipedia` _**IBM Cloud Function API**_ details
-- the `Anything else: call Watson Discovery` node to refer to your `getDiscoveryTopHit` _**IBM Cloud Function API**_ details
+- the `Call getSentiment function` node to refer to your `getSentimentXXX` _**IBM Cloud Function**_ API details
+- the `Phone Information` node to refer to your `searchWikipediaXXX` _**IBM Cloud Function API**_ details
+- the `Anything else: call Watson Discovery` node to refer to your `getDiscoveryTopHitXXX` _**IBM Cloud Function API**_ details 

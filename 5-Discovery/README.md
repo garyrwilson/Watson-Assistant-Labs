@@ -56,12 +56,12 @@ After a short time you should see the service as **Provisioned** - you may need 
 
 When the service is provisioned, select it from the list.
 
-**(3)** On the **Manage** page, copy the `API Key` and `URL` as we'll need them later when we create an _**IBM Cloud Function**_ call that uses the _Discovery_ service. Once you've done that, select `Launch tool` to go to the _**Watson Discovery**_ tooling application.
+**(3)** On the **Manage** page, copy the `API Key` and `URL` as we'll need them later when we create an _**IBM Cloud Function**_ call that uses the _Discovery_ service. Once you've done that, select `Launch Watson Discovery` to go to the _**Watson Discovery**_ tooling application.
 
 ![](./images/06-discovery-api-key.jpg)
 
 ## Build a _Discovery_ document collection
-Now let's create a _**Watson Discovery**_ document _**collection**_. A _collection_ is a group of _**documents**_ that you want to be able to search. _Documents_ contain data of potential use to an application, e.g. question and answer pairs for use by a chatbot, FAQs, webpage documentation etc. _**Watson Discovery**_ can ingest documents in _JSON, DOC, HTML_ and _PDF_ formats.
+Now let's create a _**Watson Discovery**_ document _**collection**_. A _collection_ is a group of _**documents**_ that you want to be able to search. _Documents_ contain data of potential use to an application, e.g. question and answer pairs for use by a chatbot, FAQs, webpage documentation etc. _**Watson Discovery**_ can ingest documents in _PDF, Word, PowerPoint, Excel, JSON_ and _HTML_ formats using a **Lite** plan, and additionally _PNG, TIFF_ and _JPG_ when using **Advanced** plans.
 
 **(1)** After you've dismissed the welcome messages, you'll see in the tooling that there's a **Watson Discovery News** collection already available. _Discovery News_ is a public data set that has been pre-enriched with cognitive insights from millions of internet news articles.
 
@@ -70,7 +70,7 @@ _Discovery News English_ is automatically updated with approximately 425,000 new
 - _Event detection_ - the subject/action/object _semantic role extraction_ of _Discovery_ checks for terms/actions such as "acquisition", "election results", or "IPO".
 - _Trending topics in the news_ - identify popular topics and monitor increases and decreases in how frequently they are mentioned.
 
-**(2)** We are going to create our own _collection_ from [this dataset](./data/discovery_data.zip) - it contains 1000 JSON documents, each containing a single question/answer pair that will help our chatbot answer questions about more specific mobile phone related issues.
+**(2)** We are going to create our own _collection_ from [this dataset](./data/discovery_data.zip) - it contains 500 JSON documents, each containing a single question/answer pair that will help our chatbot answer questions about more specific mobile phone related issues.
 
 **Download** and **extract** [the dataset](./data/discovery_data.zip) now.
 
@@ -107,9 +107,9 @@ An example of how we might use this as part of a chatbot application would be to
 
 You can find out more about enrichment [here](https://cloud.ibm.com/docs/services/discovery/building.html#adding-enrichments).
 
-**(6)** In order to demonstrate this, we'll add the sentiment analysis enrichment to all of the potential user responses held within our documents - if you remember, these are contained in the field `Accepted_Answer`.
+**(6)** In order to demonstrate this, we'll add the _Sentiment Analysis_ enrichment to all of the potential user responses held within our documents - if you remember, these are contained in the field `Accepted_Answer`.
 
-On the **Overview** screen, select `or browse from computer`, navigate to the directory holding your extracted documents, and open just the first document in the list.
+On the **Overview** screen, select `select documents`, navigate to the directory holding your extracted documents, and open **just** the first document in the list.
 
 ![](./images/10-upload-first-document.jpg)
 
@@ -123,9 +123,11 @@ Select `Add enrichments`:
 
 ![](./images/12-add-to-accepted-answer.jpg)
 
-**(9)** For the `Accepted_Answer` field, select `Add enrichments`, then add `Sentiment Analysis` from the list of possible enrichments presented, and hit `Done`.
+**(9)** For the `Accepted_Answer` field, select `Add enrichments`, then add `Sentiment Analysis` from the list of possible enrichments presented, and close the window.
 
 ![](./images/13-add-aa-enrichments.jpg)
+
+![](./images/13a-Select-enrichments.jpg)
 
 To complete the customisation, select `Apply changes to collection`:
 
@@ -139,7 +141,7 @@ After closing the window down, select your collection name link to go to the **O
 
 **(11)** At this point, we are going to upload all of the _documents_ to the _collection_ in order to create our knowledge base. As we do this _**Watson Discovery**_ will build the sentiment metadata for the `Accepted_Answer` field within each document.
 
-Select `Upload documents`, then `or browse from computer`, find the directory holding your extracted documents again, and select all 999 JSON documents.
+Select `Upload documents`, then `select documents`, find the directory holding your extracted documents again, and select all 500 JSON documents.
 
 ![](./images/16-upload-documents.jpg)
 
@@ -147,7 +149,7 @@ Select `Upload documents`, then `or browse from computer`, find the directory ho
 
 ![](./images/18-select-all-documents.jpg)
 
-**(12)** _**Watson Discovery**_ will now start to upload and process the files as you add them ... it will take about 10-15 minutes to ingest all of them. You'll see the **documents** count increase and the **Sentiment Analysis** values change as _**Watson Discovery**_ processes the files.
+**(12)** _**Watson Discovery**_ will now start to upload and process the files as you add them ... it will take about 10 minutes to ingest all of them. You'll see the **documents** count increase and the **Sentiment Analysis** values change as _**Watson Discovery**_ processes the files.
 
 ![](./images/19-document-count-increasing.jpg)
 
@@ -166,7 +168,7 @@ _Note: Document uploading and processing is still ongoing in the background._
 
 ![](./images/22-run-query.jpg)
 
-**(3)** Next, we'll make use of our _sentiment analysis_ enrichment by showing how you can filter out answers that have negative sentiment. Using **Filter which documents you query**, select:
+**(3)** Next, we'll make use of our _sentiment analysis_ enrichment by showing how you could, for example, filter out answers that have negative sentiment. Using **Filter which documents you query**, select:
 
   - **Field**: `enriched_Accepted_Answer.sentiment.document.label`
   - **Operator**: `does not contain`
@@ -193,7 +195,7 @@ For more on building queries, have a look at the tutorial [here](https://cloud.i
 **(5)** When _**Watson Discovery**_ has processed all the documents, we can build a an _**IBM Cloud Function**_ to access the _collection_, and then incorporate it into our _**Watson Assistant**_ chatbot.
 
 ## Create a _Discovery_ _**IBM Cloud Function**_
-**(1)** Go to _**IBM Cloud Functions**_ and create a new action via the sidebar menu in IBM Cloud, or directly via [this link](https://cloud.ibm.com/openwhisk/create/action). Call it `getDiscoveryTopHit`.
+**(1)** Go to _**IBM Cloud Functions**_ and create a new action via the sidebar menu in IBM Cloud, or directly via [this link](https://cloud.ibm.com/openwhisk/create/action). Call it `getDiscoveryTopHitXXX`, substituting `XXX` for your initials once more to give the action a unique name.  Use `Node.js 8` for the runtime.
 
 ![](./images/25-create-action.jpg)
 
@@ -278,6 +280,10 @@ This code - which is again based on the IBM Watson documented code snippets [her
 
 ![](./images/27-test-discovery-function.jpg)
 
+**(6)** Finally, click on `Endpoints` in the sidebar, and enable this new function to be a `Web Action`.
+
+![](./images/27a-enable-web-action.jpg)
+
 Now let's use this in our _**Watson Assistant**_ dialog.
 
 ## Integrate _**Watson Discovery**_ with _**Watson Assistant**_
@@ -287,7 +293,7 @@ When the user asks a question we are going to first test it against our coded _i
 
 If we don't successfully match an intent, we'll then send the user input to _**Watson Discovery**_ and use the best answer from there, if one is returned from a search of our defined _collection_.
 
-**(1)** Go to your _**Watson Assistant**_ _dialog_. We don't need to create a new _intent_ here as we are only going to query the _Discovery_ document _collection_ **if** we drop out of the dialog having matched no intents.
+**(1)** Go to your _**Watson Assistant**_ _dialog_. We don't need to create a new _intent_ here as we are only going to query the _Discovery_ document _collection_ **if we drop out of the dialog having matched no intents**.
 
 If you remember, the `anything_else` special condition is triggered at the end of a _dialog_ when the user input does not match any other dialog nodes, so we can repurpose our existing `Anything else` dialog node to call _Discovery_ instead of just responding with an _"I didn't understand"_ message.
 
@@ -304,21 +310,20 @@ Select the `Anything else` _dialog_ node and rename it to `Anything else: call W
   "actions": [
     {
       "name": "<my-getDiscoveryTopHit-endpoint>",
-      "type": "cloud_function",
+      "type": "web_action",
       "parameters": {
         "payload": "<?input.text?>"
       },
-      "credentials": "$private.myCredentials",
       "result_variable": "$discoveryData"
     }
   ]
 }
 ```
-Again, you will need to replace `<my-getDiscoveryTopHit-endpoint>` with the name of your `getDiscoveryTopHit` _endpoint_, by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ _**.../namespaces**_.
+Again, you will need to replace `<my-getDiscoveryTopHit-endpoint>` with the name of your `getDiscoveryTopHitXXX` _endpoint_, by going back to your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ _**.../namespaces**_.
 
 It should look something like:
 ```Javascript
-/jerry.seinfeld_dev/actions/getDiscoveryTopHit
+jerry.seinfeld_dev/default/getDiscoveryTopHitXXX.json
 ```
 ![](./images/29-anything-else-code.jpg)
 
@@ -328,7 +333,7 @@ It should look something like:
 
 - Create a child node called `Document Found`.
 
-- Remember that our `getDiscoveryTopHit` function returns a value of **true** in `topHitFound` if a match to the user query is found, so set your **If assistant recognizes** condition to be:
+- Remember that our `getDiscoveryTopHitXXX` function returns a value of **true** in `topHitFound` if a match to the user query is found, so set your **If assistant recognizes** condition to be:
 ```javascript
 $discoveryData.topHitFound == 'true'
 ```
@@ -364,7 +369,7 @@ And reinitialise the `$discoveryData` _context variable_ by adding it with a `nu
 ![](./images/33-reset-context.jpg)
 
 **(7)** You should now test your chatbot with user input that follows both paths, e.g.
-  - `Can I stop check-ins working` (_Discovery_)
+  - `Is my compass is pointing the right way?` (_Discovery_)
   - `My Nexus 7 can't connect to Mac` (_Discovery_)
   - `I want a new phone` (_Assistant_)
   - `My S4 changed name when connected to PC` (_Discovery_)
@@ -380,8 +385,7 @@ Use `Try It` to work out any issues, then use one of your _integrations_ to see 
 Congratulations! You've extended your chatbot to include _long-tail responses_ using a _**Watson Discovery**_ collection. Now if your chatbot can't find a specific response to your user's question within _**Watson Assistant**_, it will use _Discovery_ to search for answers from a larger corpus of information.
 
 If you want to download the _**Watson Assistant**_ _skill_ we've created thus far, you can do so [here](./assistant/skill-Phone-Advisor-lab-5.json). Once again, if you do import this _skill_, you'll have to modify:
-- the `Conversation Start` node to reflect your _**IBM Cloud Function**_ credentials
-- the `Call getSentiment function` node to refer to your `getSentiment` _**IBM Cloud Function**_ API details
-- the `Anything else: call Watson Discovery` node to refer to your `getDiscoveryTopHit` _**IBM Cloud Function API**_ details
+- the `Call getSentiment function` node to refer to your `getSentimentXXX` _**IBM Cloud Function**_ API details
+- the `Anything else: call Watson Discovery` node to refer to your `getDiscoveryTopHitXXX` _**IBM Cloud Function API**_ details
 
 The final part of the _**Watson Assistant**_ labs will show you how you can integrate third party data into your application. Go to [Lab 6: Integrating External Data using IBM Cloud Functions](../6-External) to complete your chatbot!

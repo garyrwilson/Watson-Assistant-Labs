@@ -77,19 +77,27 @@ As you've already seen, _**Watson Assistant**_ is great at collecting the requir
 
 IBM Watson service calls are documented [here](https://github.com/watson-developer-cloud) for a number of different programming languages. We're going to use _Javascript_ (as we'll also use it in later labs) - you can take a look at the documentation and templates we've modelled the calls on [here](https://github.com/watson-developer-cloud/node-sdk) if you wish, although we'll supply all of the code you need to complete the lab.
 
-**(4)** Go to _**IBM Cloud Functions**_ by selecting the `burger icon` in the top left-hand corner, then `Functions`. From there, click `Start Creating`, then `Create Action`.
+**(4)** Go to _**IBM Cloud Functions**_ by selecting the `burger icon` in the top left-hand corner, then `Functions`.
 
 ![](./images/08-find-functions.jpg)
+
+From there, first _**check the pulldown menu at the top right**_.
+
+- If you are using your **own** IBM Cloud account, select the option from the menu that matches the location you have been using to create your existing services (you can check this [here](https://cloud.ibm.com/resources)).
+
+- If you are using a **shared** IBM Cloud account, select the option that reflects the namespace and location you have been provided.
+
+Next, click `Start Creating`, then `Create Action`.
 
 ![](./images/09-functions-start-creating.jpg)
 
 ![](./images/10-create-action.jpg)
 
-**(5)** Call your new action `getSentiment`, ensure you select a `Runtime` of **Node.js 8**, and hit `Create`.
+**(5)** Call your new action `getSentimentXXX` - where XXX = your initials (so it has a unique name) - then ensure you select a `Runtime` of **Node.js 8**, and hit `Create`.
 
 ![](./images/11-create-get-sentiment.jpg)
 
-You'll then be transported to a code editor. Delete all of the default lines of code within the editor, and replace them with this:
+You'll then be transported to a code editor. Delete all of the default lines of code within the editor, and replace them with these:
 
 ```Javascript
 /**
@@ -140,6 +148,8 @@ return promise;
 - Replace `<nlu_api_key>` with the value of the **API key** you saved earlier from your _**Watson NLU**_ credentials
 - Replace `<nlu_url>` with the value of the **URL** you saved from the same credentials
 
+_Make sure you remove the `<>` signs when you do the replacements!_
+
 Now hit `Save`.
 
 ![](./images/14-get-sentiment-code-complete.jpg)
@@ -156,32 +166,13 @@ The code accepts text as input (_payload_), calls the _**Watson NLU**_ service (
 
 ![](./images/16-invoke-function.jpg)
 
-We've now created a _**IBM Cloud Function**_ that can accept text as input and calculate and return a _sentiment score_ for that text, so let's go and use it in a new _**Watson Assistant**_ _intent_ and _dialog_.
+**(9)** We've now successfully created an _**IBM Cloud Function**_ that can accept text as input and calculate and return a _sentiment score_ for that text. The final thing we need to do here is to make this function callable from within _**Watson Assistant**_ (or in fact, any other application).
 
-## Setup _**Watson Assistant**_ to use _**IBM Cloud Functions**_
-As you've already seen, we need to pass security credentials between services and applications in order to use them. In order to call our new `getSentiment` _**IBM Cloud Function**_ from within our _**Watson Assistant**_ _dialog_, we need to extract our _**IBM Cloud Functions**_ credentials, and ensure _**Watson Assistant**_ understands them correctly.
+Select `Endpoints` from the sidebar, tick the `Enable as Web Action` box, then `Save`.
 
-**(1)** Get your _**IBM Cloud Function**_ **API Key** from the `API Key` option under `Getting Started`. There's a copy icon available to copy the key to the clipboard.
+![](./images/17-enable-as-web-action.jpg)
 
-![](./images/17-get-functions-api-key.jpg)
-
-**(2)** In your _**Watson Assistant**_ _skill_, create a new _dialog_ node **above** your `Welcome` node called `Conversation Start`. Under **If assistant recognizes** enter `conversation_start`, and ensure the node does a `Jump to...` your `Welcome` node and evaluates the `Condition`.
-
-![](./images/18-dialog-conversation-start.jpg)
-
-**(3)** The `conversation_start` condition is a special condition that will **always** be triggered at the commencement of a _dialog_. Although in a number of circumstances the `welcome` special condition will perform this function - such as when we use the `Try it` pane within the tool, and from the chat widget in the `Preview Link` integration - it cannot be guaranteed for all integrations.
-
-This might occur for example, because nodes with the `welcome` special condition are skipped in dialog flows that are _started by users_. And deployed assistants typically wait for users to initiate conversations with them, not the other way around.
-
-So it's good practice to use `conversation_start`, and we'll take further advantage of it here by using it to define our _**IBM Cloud Function**_ credentials in a _context variable_.
-
-**(4)**  Open the _context editor_ for the node, add the variable `$private` with the value below, after replacing `<your-ibm-cloud-functions-api-key>` with the key you copied earlier in step **(1)**.
-```Javascript
-{"myCredentials":{"api_key":"<your-ibm-cloud-functions-api-key>"}}
-```
-![](./images/19-add-credentials.jpg)
-
-Now regardless of integration type our chatbot will always start correctly, and it will define the credentials required to call any of our _**IBM Cloud Functions**_.
+Now let's go and use our function in a new _**Watson Assistant**_ _intent_ and _dialog_.
 
 ## Create `Submit Review` _intent_ and _dialog_
 **(1)** Let's start with building an _intent_ called `#submitreview` with some examples of text that a user might say to enter this dialog, e.g.
@@ -209,15 +200,15 @@ The **List label** field describes how the option will be presented to the chatb
 
 ![](./images/21-options-try-it.jpg)
 
-**(4)** Next, create a child node of `Submit Review`. This purpose of this node - `Save Brand` - is to save the brand option just selected by the user in a _context variable_, and then ask the user for their review text.
+**(4)** Next, create a child node of `Submit Review`. This purpose of this node - `Save Brand` - is to save the brand just selected by the user in a _context variable_, and then ask the user for their review text.
 
-Configure it as you see here, saving the `@brand` passed selected in variable `$brandForReview`, and responding to the user with `Please submit your $brandForReview review now, ensuring you enter more than 15 characters.`
+Configure it as you see here, using the _Context Editor_ to save the `@brand` option selected in the variable `$brandForReview`, and responding to the user with `Please submit your $brandForReview review now, ensuring you enter more than 15 characters.`
 
 ![](./images/22-dialog-save-brand.jpg)
 
-_Note:_ we are explicitly specifying a requirement for a review of at least 15 characters in length, as the _**Watson NLU**_ service will throw an error if fewer characters are provided as input. You could add a check for this when you've completed this lab if you want an additional challenge!
+_Note:_ we are explicitly specifying a requirement for review text of at least 15 characters in length, as the _**Watson NLU**_ service will throw an error if fewer characters are provided as input. You could add a check for this when you've completed this lab if you want an additional challenge!
 
-**(5)** The last thing the `Save Brand` node does is `Wait for user input`. This will be the review text that we want to send to our `getSentiment` _**IBM Cloud Function**_.
+**(5)** The last thing the `Save Brand` node does is `Wait for user input`. This user input will be the review text that we want to send to our `getSentimentXXX` _**IBM Cloud Function**_.
 
 Create a child node of `Save Brand`, called `Call getSentiment function`. Set **If assistant recognizes** to `true`, and open the node's _**JSON editor**_.
 
@@ -234,28 +225,25 @@ _**Watson Assistant's**_ _JSON editor_ provides an alternative method for defini
   "actions": [
     {
       "name": "<my-getSentiment-endpoint>",
-      "type": "cloud_function",
+      "type": "web_action",
       "parameters": {
         "payload": "<?input.text?>"
       },
-      "credentials": "$private.myCredentials",
       "result_variable": "$nluSentiment"
     }
   ]
 }
 ```
-The **only** thing you will need to replace here is `<my-getSentiment-endpoint>`. You can get the name of your _**endpoint**_ by selecting your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ _**.../namespaces**_.
+The **only** thing you will need to replace here is `<my-getSentiment-endpoint>`. You can get the name of your _**endpoint**_ by going back to your _**IBM Cloud Function**_ in IBM Cloud, clicking `Endpoints` from the sidebar (if you're not already on that screen), then copying everything in the **Web Action URL** _after_ _**.../web/**_.
 
 It should look something like:
 ```Javascript
-/jerry.seinfeld_dev/actions/getSentiment
+jerry.seinfeld_dev/default/getSentimentXXX.json
 ```
 
-![](./images/24-get-function-api-name1.jpg)
+![](./images/24-get-function-api-name.jpg)
 
-![](./images/25-get-function-api-name2.jpg)
-
-![](./images/25a-cf-json-editor-code.jpg)
+![](./images/25-json-editor.jpg)
 
 **(7)** When we reach this node in the _dialog_, we will now call our _**IBM Cloud Function,**_ passing `<?input.text?>` as our payload.
 
@@ -263,7 +251,7 @@ It should look something like:
 
 You can see that we are also passing the _**IBM Cloud Function**_ credentials we set up earlier, and the data returned by the function will be stored in a _context variable_ we have called `$nluSentiment`.
 
-**(8)** When the dialog executes our `getSentiment` function, it will return a _sentiment score_ we can use to create a tailored response for the user. In fact, we are going to create two responses - one that informs the user whether the overall review is _positive, ambivalent or negative_, and one that is customised depending on the overall _strength_ of sentiment.
+**(8)** When the dialog executes our `getSentimentXXX` function, it will return a _sentiment score_ we can use to create a tailored response for the user. In fact, we are going to create two responses - one that informs the user whether the overall review is _positive, ambivalent or negative_, and one that is customised depending on the overall _strength_ of sentiment.
 
 Create a child node of `Call getSentiment function`, and call it `Send Positive/Negative Message`. Use **If assistant recognizes** `true`.
 
@@ -277,7 +265,7 @@ If assistant recognizes  | Respond with
 
 ![](./images/26-send-positive-negative.jpg)
 
-The variable `$nluSentiment` is a JSON object that contains the data we passed back from our _**IBM Cloud Function**_, which in this case is a single variable named `score`, hence our comparator here is `$nluSentiment.score`.
+The variable `$nluSentiment` is a JSON object that contains the data we passed back from our _**IBM Cloud Function**_, which in this case contains a single variable named `score`, hence our comparator here is `$nluSentiment.score`.
 
 The sentiment score is returned as a value between -1 and 1, to a number of decimal places. The
 ```Javascript
@@ -323,8 +311,6 @@ Finally, in our `Help & Reset Context` node, set the context variables `$brandFo
 ## Summary
 You've reached the end of this lab! By completing it you've learned how to further enhance your chatbot by calling additional services using _**IBM Cloud Functions**_. And you should now also understand what _**Watson Natural Language Understanding**_ is, and how to use _sentiment_ and _emotion_ with chatbots.
 
-If you want to download the complete _**Watson Assistant**_ _skill_ we've built - up to and including this lab - you can do so [here](./assistant/skill-Phone-Advisor-lab-4.json). If you do import this `skill`, you'll have to modify:
-- the `Conversation Start` node to reflect your _**IBM Cloud Function**_ credentials
-- the `Call getSentiment function` node to refer to your `getSentiment` _**IBM Cloud Function**_ API details
+If you want to download the complete _**Watson Assistant**_ _skill_ we've built - up to and including this lab - you can do so [here](./assistant/skill-Phone-Advisor-lab-1D.json). If you do import this `skill`, you'll have to modify the `Call getSentiment function` node to refer to your `getSentimentXXX` _**IBM Cloud Function**_ details.
 
 Now go to [Lab 5: Extending Your Chatbot with Watson Discovery](../5-Discovery) to discover how to increase your chatbot's knowledge base, by building _long-tail_ responses into your application!

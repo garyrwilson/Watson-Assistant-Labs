@@ -14,11 +14,11 @@ In this lab we'll build a web-hosted chat widget that will allow you to test the
 ## Create an _**Assistant**_ for your skill
 An _**assistant**_ is the user-facing component of _**Watson Assistant**_ that manages the flow of information between your _skills_ and your users. _Assistants_ also allow you to create _**integrations**_ that publish your chatbot to the channels your customers will typically go to for help, e.g. _Slack_, _Facebook Messenger_, _Wordpress_, etc.
 
-**(1)** Select `IBM Watson Assistant` from the top of the screen, then `Assistants` from the menu bar and `Create new`.
+**(1)** Select `IBM Watson Assistant` from the very top left of the screen, then from the `Assistants` screen, hit `Create assistant`.
 
 ![](./images/01-create-assistant.jpg)
 
-**(2)** Add a **Name** and **Description** for your _Assistant_, and select `Create`.
+**(2)** Add a **Name** and **Description** for your _Assistant_, and select `Create assistant`.
 
 ![](./images/02-add-assistant.jpg)
 
