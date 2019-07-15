@@ -319,7 +319,7 @@ Select the `Anything else` _dialog_ node and rename it to `Anything else: call W
   ]
 }
 ```
-Again, you will need to replace `<my-getDiscoveryTopHit-endpoint>` with the name of your `getDiscoveryTopHitXXX` _endpoint_, by going back to your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **REST API URL** _after_ _**.../namespaces**_.
+Again, you will need to replace `<my-getDiscoveryTopHit-endpoint>` with the name of your `getDiscoveryTopHitXXX` _endpoint_, by going back to your _**IBM Cloud Function**_, clicking `Endpoints`, then copying everything in the **Web Action URL** _after_ _**.../web/**_.
 
 It should look something like:
 ```Javascript
