@@ -32,7 +32,7 @@ The user might provide values for multiple _slots_ at once. For example, the inp
 
 _**Watson Assistant**_ can provide us with some help here, by looking for any _**System Entities**_ we might want to collect. _System entities_ can be used to automatically recognise a broad range of values for the object types they represent. For example, the **@sys-number** system entity matches any numerical value, including whole numbers, decimal fractions, or even numbers written out as words.
 
-In your Watson Assistant skill, go to `Entities`, `System Entities`, and turn on the ones we'll need here: `sys-currency` (for _spend_), `sys-number` (for _data usage_) and `sys-date` (for _new contract date_).
+In your _**Watson Assistant**_ skill, go to `Entities`, `System Entities`, and turn on the ones we'll need here: `sys-currency` (for _spend_), `sys-number` (for _data usage_) and `sys-date` (for _new contract date_).
 
 ![](./images/04-system-entities.jpg)
 
