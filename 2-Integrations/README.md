@@ -136,8 +136,6 @@ Now enter a name for your chatbot (e.g. `Phone Advisor`) and hit `Create`.
 
 Start by editing the **Chatbot header** and **Chatbot subheader** fields. This is the text that will appear on the webpage as the title(s) of your chatbot. You can also use the **Choose colorscheme** dropdown menu here to change the basic look of your webpage.
 
-Make sure you click `Save Changes`.
-
 ![](./images/33-chatbot-platform-general.jpg)
 
 **(4)** Next you'll need security credentials from _**Watson Assistant**_ in order to connect your chatbot skill to the web application that will be generated for you.
