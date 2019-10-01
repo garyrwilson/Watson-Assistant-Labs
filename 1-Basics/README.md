@@ -326,7 +326,7 @@ Let's add some images to our existing responses.
 
 ![](./images/43-add-response-type.jpg)
 
-**(3)** Enter `iPhone XR` as the **Title**, use `https://bit.ly/2S0WmWg` as the **Image source**, and hit `Save`. If you enter this URL into a web browser you should see an image of an _iPhone XR_. You can use any image URL you like here of course - try searching Google Images if you want to use your own.
+**(3)** Enter `iPhone XR` as the **Title**, use `https://bit.ly/2o9LfQY` as the **Image source**, and hit `Save`. If you enter this URL into a web browser you should see an image of an _iPhone XR_. You can use any image URL you like here of course - try searching Google Images if you want to use your own.
 
 ![](./images/44-add-image-data.jpg)
 
@@ -340,7 +340,7 @@ For the `Brand Positive` node:
 
 Brand   | Title     | Image source
 --------|-----------|-----------------------
-Apple   | `iPhone XR` | `https://bit.ly/2S0WmWg`
+Apple   | `iPhone XR` | `https://bit.ly/2o9LfQY`
 Google  | `Pixel 3`   | `https://bit.ly/2EhAuC1`
 Samsung | `Galaxy S9` | `https://bit.ly/2zWQlmH`
 
